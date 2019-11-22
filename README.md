@@ -1,11 +1,11 @@
-#Exploration of PostGIS functionalities
+# Exploration of PostGIS functionalities
 
 Our goal is to create a database having two tables in which we will be importing data from csv files and performing some data exploration and manipulation operations.
 We will get to explore some of the interesting functions that postgis provides and how they can be used.
 
 The following instructions are given for Ubuntu 18.04
 
-##Installation
+## Installation
 
 To install postGIS, we run the following commands :
 
@@ -21,7 +21,7 @@ sudo -i -u postgres
 
 We will be using the command `psql` which is a terminal based command that can help us interface with postgreSQL, interact with the databases, their metadata and write queries interactively.
 
-##Create a new database
+## Create a new database
 
 To create a database the command is `createdb` followed by the name of the database
 
@@ -35,7 +35,7 @@ psql -l
 ```
 Press `q` to exit the interactive prompt created.
 
-##Connect to the database
+## Connect to the database
 
 To connect to the database, from the terminal, we uyse `psql` followed by the name of the existing database :
 
@@ -50,7 +50,7 @@ create extension postgis;
 ```
 The above command should create a table name as **spatial ref sys** in our database that can be referred to understand spatial data.
 
-##Create a table
+## Create a table
 
 Here below are the most basic scripts to create tables in a postgis database :
 
@@ -81,7 +81,7 @@ Similarly to describe a table (its schema, column types etc), you can use `psql 
 
 
 
-##Data ingestion from csv files
+## Data ingestion from csv files
 
 In case, we have the exact same number of columns in the csv and in the table, we do not need to specify the columns in brackets. 
 
@@ -108,17 +108,17 @@ To ensure, the column is being displayed as its proper geomtric type requires, w
 ```
 SELECT  ST_AsText(geometry) FROM extract_tree1 LIMIT 10;
 ```
-##Exploratory analysis
+## Exploratory analysis
 
 To check whether or not, there are redundant geometries (polygons covering the same area or points with similar coordinates), we can leverage the `ST_AsBinary` function in the following manner :
 
 `SELECT COUNT(DISTINCT (ST_AsBinary(geometry)))  FROM trees;`
 
 
-##Querying Operations
+## Querying Operations
 	###Getting the nearest neighbour
 
 
-##Notes
+## Notes
 
 An SRID (Spatial Reference Identifier) is a unique identifier associated with a coordinate system. Some of them have been defined by Esri the international supplier of geographuc information system softwares or by the European Petroleum Survey Group (EPSG). A spatial reference system is composed of datum and mathematical formulas constituting a map projection that can be used to locate geographical entities.
