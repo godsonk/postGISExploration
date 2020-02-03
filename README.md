@@ -101,8 +101,13 @@ Copies are incremental which means the content of the second file will be added 
 If this command fails to execute, make sure the srid (Spatial Reference Identifier) has not been set to 4326 already.
 The command is similar for buildings :
 ```
-COPY buildings (id, geometry,epsg) FROM '/home/godson/Documents/nam.r_test/extract_building.csv' DELIMITER ',' CSV HEADER;
+COPY buildings (id, geometry,epsg) FROM '/path/to/extract_building.csv' DELIMITER ',' CSV HEADER;
 ```
+
+Let's try to view the content of the table. We get the following result :
+
+![Alt text](./images/tablecontent.png?raw=true "The content of the table without setting the srid")
+
 Once the data has been ingested, we can set the right SRID:
 
 ```
