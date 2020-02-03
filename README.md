@@ -10,13 +10,13 @@ The following instructions are given for Ubuntu 18.04
 To install postGIS, we run the following commands :
 
 ```
-sudo apt-get update
-sudo apt-get install postgis
+$ sudo apt-get update
+$ sudo apt-get install postgis
 ```
 We then switch to the user (Check if he has been created already)
 
 ```
-sudo -i -u postgres
+$ sudo -i -u postgres
 ```
 
 We will be using the command `psql` which is a terminal based command that can help us interface with postgreSQL, interact with the databases, their metadata and write queries interactively.
@@ -26,12 +26,12 @@ We will be using the command `psql` which is a terminal based command that can h
 To create a database the command is `createdb` followed by the name of the database
 
 ```
-createdb postgis_godsonk
+$ createdb postgis_godsonk
 ```
 
 To list existing databases and make sure our database was created :
 ```
-psql -l
+$ psql -l
 ```
 Press `q` to exit the interactive prompt created.
 
@@ -40,15 +40,18 @@ Press `q` to exit the interactive prompt created.
 To connect to the database, from the terminal, we uyse `psql` followed by the name of the existing database :
 
 ```
-psql postgis_godson
+$ psql postgis_godsonk
 ```
 
 The next step is to activate the postgis extenstion (without which spatial data cannot be properly understood) using the command :
 
 ```
-create extension postgis;
+# create extension postgis;
 ```
 The above command should create a table name as **spatial ref sys** in our database that can be referred to understand spatial data.
+It contains records for existing Spatial Reference System (SRS) with each row having the identifer (SRID) and description of a system.
+To put it simply, a SRS is a coordinate based local, regional or global system that can help locate geographical entities.
+Our dataset here uses the EPSG code 4326. EPSG codes identify the coordinate systems used by the European Petroleum Survey Group. They are also widely implemented and used in many GIS systems. The code EPSG:4326 corresponds to the coordinate system named WSG84 which is used by the GPS navigation system.
 
 ## Create a table
 
@@ -88,6 +91,13 @@ In case, we have the exact same number of columns in the csv and in the table, w
 ```
 COPY trees (id, geometry,epsg) FROM '/path/to/extract_tree1.csv' DELIMITER ',' CSV HEADER;
 ```
+
+```
+COPY trees (id, geometry,epsg) FROM '/path/to/extract_tree2.csv' DELIMITER ',' CSV HEADER;
+```
+
+Copies are incremental which means the content of the second file will be added to the content of the table already imported from the first file.
+
 If this command fails to execute, make sure the srid (Spatial Reference Identifier) has not been set to 4326 already.
 The command is similar for buildings :
 ```
@@ -116,7 +126,12 @@ To check whether or not, there are redundant geometries (polygons covering the s
 
 
 ## Querying Operations
-	###Getting the nearest neighbour
+	
+###Getting the nearest neighbour
+`ST_Distance(geometry1,geometry2)` can be used as the simplest way to find the nearest nei
+
+## Other useful commands
+Rename column : ALTER TABLE table_name RENAME column_name TO new_column_name;
 
 
 ## Notes
